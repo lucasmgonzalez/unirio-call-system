@@ -18,11 +18,10 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS AlterarCampo;
 DELIMITER //
-CREATE PROCEDURE AlterarCampo(thisId INT, thisIdChamada INT, thisTitulo VARCHAR(40), thisTipo INT, thisDecimais INT, thisOpcional INT, thisJsonOpcoes TEXT)
+CREATE PROCEDURE AlterarCampo(thisId INT, thisTitulo VARCHAR(40), thisTipo INT, thisDecimais INT, thisOpcional INT, thisJsonOpcoes TEXT)
 BEGIN
     UPDATE CampoChamada
-    SET idChamada = thisIdChamada, 
-    titulo = thisTitulo, 
+    SET titulo = thisTitulo, 
     tipo = thisTipo, 
     decimais = thisDecimais, 
     opcional = thisOpcional, 
