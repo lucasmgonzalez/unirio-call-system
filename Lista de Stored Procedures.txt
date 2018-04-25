@@ -1,0 +1,44 @@
+﻿Lista de Stored Procedures - Grupo 4
+
+
+RegistrarUsuario(nome, email, out id)
+AtribuirSenha(idUsuario, senha)
+AssociarTokenSocial(idUsuario, tokenSocial)
+AlterarDadosUsuario(idUsuario, nome)
+RegistrarLogin(idUsuario)
+AssociarTokenEsqueciSenha(idUsuario, token)
+DesassociarTokenEsqueciSenha(idUsuario)
+TrocarSenha(idUsuario, token, senha, out ok)
+RegistrarFalhaLogin(idUsuario)
+DesbloquearUsuario(idUsuario)
+
+
+CadastrarUnidadeFuncional(nome, sigla)
+AlterarUnidadeFuncional(idUnidade, nome, sigla)
+RemoverUnidadeFuncional(idUnidade)
+
+
+AssociarGestorUnidadeFuncional(idGestor, idUnidade)
+DesassociarGestorUnidadeFuncional(idGestor, idUnidade)
+
+
+CadastrarChamada(nome, sigla, dataAbertura, dataEncerramento)
+AlterarChamada(nome, sigla, dataAbertura, dataEncerramento)
+
+
+CadastrarCampo(idChamada, titulo, tipo, decimais, opcional, jsonOpcoes)
+AlterarCampo(idChamada, titulo, tipo decimais, opcional, jsonOpcoes)
+CancelarChamada(idChamada)
+EncerrarChamada(idChamada)
+
+
+RegistrarInscricaoChamada(idChamada, idUsuario)
+AtualizarIncricaoChamada(idChamada, idUsuario)
+CancelarInscricao(idInscricaoChamada)
+
+
+CadastrarInscricaoCampoChamada(idInscricaoChamada, idCampoChamada, valor)
+AlterarIncricaoCampoChamada(idInscricaoChamada, idCampoChamada, valor)
+
+
+RegistrarResultadoChamada(idChamada, valor)
