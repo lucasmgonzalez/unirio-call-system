@@ -4,7 +4,7 @@
 
 DROP PROCEDURE IF EXISTS CadastrarUnidadeFuncional;
 DELIMITER //
-CREATE PROCEDURE CadastrarUnidadeFuncional(newNome VARCHAR(80), newSigla VARCHAR(10))
+CREATE PROCEDURE CadastrarUnidadeFuncional(newNome VARCHAR(80), newSigla VARCHAR(10), OUT id INT)
 BEGIN
 	INSERT INTO UnidadeFuncional (dataRegistro, dataAtualizacao, nome, sigla)
 	VALUES (NOW(), NOW(), novoNome, newSigla);
