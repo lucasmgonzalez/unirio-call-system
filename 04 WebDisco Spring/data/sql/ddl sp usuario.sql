@@ -7,7 +7,7 @@ DELIMITER //
 CREATE PROCEDURE RegistraUsuario(newNome VARCHAR(80), newEmail VARCHAR(80), OUT id INT)
 BEGIN
 	INSERT INTO Usuario (dataRegistro, dataAtualizacao, nome, email)
-	VALUES (NOW(), NOW(), novoNome, novoEmail);
+	VALUES (NOW(), NOW(), newNome, newEmail);
 
 	SET id = LAST_INSERT_ID();
 END //
