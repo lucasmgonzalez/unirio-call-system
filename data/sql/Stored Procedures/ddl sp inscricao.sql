@@ -20,9 +20,7 @@ DELIMITER //
 CREATE PROCEDURE AtualizarIncricaoChamada(thisId INT, thisIdChamada INT, idUsuario INT)
 BEGIN
     UPDATE InscricaoChamada
-    SET idChamada = thisIdChamada,
-    idUsuario = thisIdUsuario
-    dataAtualizacao = NOW()
+    SET dataAtualizacao = NOW()
     WHERE id = thisId
 END //
 DELIMITER ;
