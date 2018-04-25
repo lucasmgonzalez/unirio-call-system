@@ -4,10 +4,12 @@
 
 DROP PROCEDURE IF EXISTS CadastrarChamada;
 DELIMITER //
-CREATE PROCEDURE CadastrarChamada(thisNome VARCHAR(80), thisSigla VARCHAR(10), thisDataAbertura TIMESTAMP, thisDataEncerramento TIMESTAMP)
+CREATE PROCEDURE CadastrarChamada(thisNome VARCHAR(80), thisSigla VARCHAR(10), thisDataAbertura TIMESTAMP, thisDataEncerramento TIMESTAMP, OUT id INT)
 BEGIN
     INSERT INTO Chamada (nome, sigla, dataAbertura, dataEncerramento)
     VALUES (thisNome, thisSigla, thisDataAbertura, thisDataEncerramento);
+    
+    SET id = LAST_INSERT_ID();
 END //
 DELIMITER ;
 
