@@ -10,10 +10,18 @@ public abstract class AbstractDao {
 
     private static final String COULD_NOT_ESTABLISH_CONNECTION = "Could not establish connection with database";
 
+    private static String buildUrl(String driver, String host, String database) {
+        return "jdbc:" + driver + "://" + host + "/" + database;
+    }
+
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.jbdc.Driver").newInstance();
-            return DriverManager.getConnection(Configuration.getDatabaseConnection(), Configuration.getDatabaseUser(),
+
+            String url = buildUrl(Configuration.getDatabaseDriver(), Configuration.getDatabaseHost(),
+                    Configuration.getDatabaseName());
+
+            return DriverManager.getConnection(url, Configuration.getDatabaseUser(),
                     Configuration.getDatabasePassword());
         } catch (SQLException e) {
             System.out.println(COULD_NOT_ESTABLISH_CONNECTION + " - SQL ERROR");
