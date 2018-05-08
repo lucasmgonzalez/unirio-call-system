@@ -1,10 +1,10 @@
 package br.unirio.calls;
 
-import com.mysql.jdbc.Driver;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
+// @ComponentScan("br.unirio.calls.domains")
 @SpringBootApplication
 public class Application {
 

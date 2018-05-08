@@ -9,12 +9,13 @@ public class Configuration {
 
     public static final String DATABASE_DRIVER_KEY = "DATABASE_DRIVER";
     public static final String DATABASE_HOST_KEY = "DATABASE_HOST";
+    public static final String DATABASE_PORT_KEY = "DATABASE_PORT";
     public static final String DATABASE_NAME_KEY = "DATABASE_NAME";
     public static final String DATABASE_USER_KEY = "DATABASE_USER";
     public static final String DATABASE_PASSWORD_KEY = "DATABASE_PASSWORD";
 
     private static String valueOrDefault(String value, String defaultValue) {
-        return !value.isEmpty() ? value : defaultValue;
+        return value != null && !value.isEmpty() ? value : defaultValue;
     }
 
     public static String getDatabaseDriver() {
@@ -23,6 +24,10 @@ public class Configuration {
 
     public static String getDatabaseHost() {
         return valueOrDefault(System.getenv(DATABASE_HOST_KEY), "localhost");
+    }
+
+    public static String getDatabasePort() {
+        return valueOrDefault(System.getenv(DATABASE_PORT_KEY), "3306");
     }
 
     public static String getDatabaseName() {

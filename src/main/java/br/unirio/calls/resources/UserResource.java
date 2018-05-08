@@ -1,8 +1,5 @@
 package br.unirio.calls.resources;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import br.unirio.calls.domains.user.User;
@@ -23,7 +20,7 @@ public class UserResource {
         this.email = user.getEmail();
         this.socialId = user.getSocialId();
         this.blocked = user.isBlocked();
-        this.lastLoginDate = user.getLastLoginDate().toString(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+        this.lastLoginDate = user.getLastLoginDate() != null ? user.getLastLoginDate().toString("yyyy-MM-dd HH:mm:ss") : null;
         this.isAdministrator  =user.isAdministrator();
     }
 }

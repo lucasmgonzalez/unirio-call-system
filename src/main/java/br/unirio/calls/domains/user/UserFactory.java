@@ -10,8 +10,9 @@ import com.github.javafaker.Faker;
 public class UserFactory {
 
     public static User buildFromResultSet(ResultSet rs) {
-        User user = new User();
         try {
+            User user = new User();
+
             user.setId(rs.getInt("id"));
             user.setName(rs.getString("nome"));
             user.setEmail(rs.getString("email"));
@@ -23,21 +24,26 @@ public class UserFactory {
             user.setBlocked(rs.getBoolean("bloqueado"));
             user.setLastLoginDate(new DateTime(rs.getTimestamp("dataUltimoLogin")));
             user.setAdministrator(rs.getBoolean("administrador"));
+
+            return user;
         } catch (SQLException e) {
-            // Log Errors
-            User u = new User();
-            u.setName("errinho");
-            return u;
+            System.out.println(e.getMessage());
+            return null;
         }
+    }
+
+    public static User buildFakeUser(int id) {
+        User user = buildFakeUser();
+
+        user.setId(id);
 
         return user;
     }
 
-    public static User buildFakeUser(int id) {
+    public static User buildFakeUser() {
         Faker faker = new Faker();
         User user = new User();
 
-        user.setId(id);
         user.setName(faker.name().firstName());
         user.setEmail(faker.internet().emailAddress());
         user.setAdministrator(false);

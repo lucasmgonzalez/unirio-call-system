@@ -4,45 +4,25 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import org.springframework.stereotype.Service;
-
 import br.unirio.calls.configuration.Configuration;
 
-@Service("SqlConnectionManager")
 public class SqlConnectionManager {
     private static final String COULD_NOT_ESTABLISH_CONNECTION = "Could not establish connection with database";
 
-    private static SqlConnectionManager instance;
-
-    private Connection connection;
-
-    private SqlConnectionManager() {
-
+    private static String buildUrl(String driver, String host, String port, String database) {
+        return "jdbc:" + driver + "://" + host + ":" + port + "/" + database;
     }
 
-    public SqlConnectionManager getInstance() {
-        if (instance == null) {
-            instance = new SqlConnectionManager();
-        }
-
-        return instance;
-    }
-
-    private static String buildUrl(String driver, String host, String database) {
-        return "jdbc:" + driver + "://" + host + "/" + database;
-    }
-
-    public Connection getConnection() {
+    public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.jbdc.Driver").newInstance();
-            if (this.connection == null) {
-                String url = buildUrl(Configuration.getDatabaseDriver(), Configuration.getDatabaseHost(),
-                        Configuration.getDatabaseName());
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-                this.connection = DriverManager.getConnection(url, Configuration.getDatabaseUser(),
-                        Configuration.getDatabasePassword());
-            }
-            return connection;
+            String url = buildUrl(Configuration.getDatabaseDriver(), Configuration.getDatabaseHost(),
+                    Configuration.getDatabasePort(), Configuration.getDatabaseName());
+            System.out.println(url);
+
+            return DriverManager.getConnection(url, Configuration.getDatabaseUser(),
+                    Configuration.getDatabasePassword());
         } catch (SQLException e) {
             System.out.println(COULD_NOT_ESTABLISH_CONNECTION + " - SQL ERROR");
             System.out.println(e.getMessage());

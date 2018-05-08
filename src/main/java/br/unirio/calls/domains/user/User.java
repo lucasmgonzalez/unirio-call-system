@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public @Data class User {
-    public static final String TABLE_NAME = "Usuario";
 
     private int id;
     private String name;
