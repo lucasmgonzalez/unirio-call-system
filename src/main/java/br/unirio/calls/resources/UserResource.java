@@ -1,7 +1,5 @@
 package br.unirio.calls.resources;
 
-import org.joda.time.format.DateTimeFormat;
-
 import br.unirio.calls.domains.user.User;
 import lombok.Getter;
 

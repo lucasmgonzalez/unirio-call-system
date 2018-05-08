@@ -15,8 +15,6 @@ public class SqlConnectionManager {
 
     public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-
             String url = buildUrl(Configuration.getDatabaseDriver(), Configuration.getDatabaseHost(),
                     Configuration.getDatabasePort(), Configuration.getDatabaseName());
             System.out.println(url);
@@ -25,18 +23,6 @@ public class SqlConnectionManager {
                     Configuration.getDatabasePassword());
         } catch (SQLException e) {
             System.out.println(COULD_NOT_ESTABLISH_CONNECTION + " - SQL ERROR");
-            System.out.println(e.getMessage());
-            return null;
-        } catch (ClassNotFoundException e) {
-            System.out.println(COULD_NOT_ESTABLISH_CONNECTION + " - Driver not found");
-            System.out.println(e.getMessage());
-            return null;
-        } catch (InstantiationException e) {
-            System.out.println(COULD_NOT_ESTABLISH_CONNECTION + " - Error on driver instatiation");
-            System.out.println(e.getMessage());
-            return null;
-        } catch (IllegalAccessException e) {
-            System.out.println(COULD_NOT_ESTABLISH_CONNECTION + " - Illegal access");
             System.out.println(e.getMessage());
             return null;
         }
