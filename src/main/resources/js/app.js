@@ -1,1 +1,1 @@
-console.log('Carregado aqui');
+console.log(`Carregado aqui - ${'OH BOOOOY!'}`); 
