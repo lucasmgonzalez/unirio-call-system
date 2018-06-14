@@ -5,10 +5,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta charset='utf-8'>
         <link rel="stylesheet" href="/styles/styles.css">
+        <base href="/">
     </head>
 
-    <body>
-        <p>Teste outside webapp</p>
+    <body data-ng-app="myApp">
+    
+        <ui-view></ui-view>
 
         <script src="/scripts/app.js"></script>
     </body>

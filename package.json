@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/lucasmgonzalez/unirio-call-system#readme",
   "dependencies": {
+    "@angular/router": "^0.2.0",
     "@uirouter/angularjs": "^1.0.18",
     "angular": "^1.6.10",
     "gulp": "^3.9.1",
@@ -26,7 +27,7 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
-    "babel-plugin-transform-es2015-template-literals": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.2.2",
     "gulp-livereload": "^3.8.1",
