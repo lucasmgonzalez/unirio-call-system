@@ -1,7 +1,7 @@
-const angular = require('angular');
-const router = require('@uirouter/angularjs')
+import angular from 'angular';
+import uirouter from '@uirouter/angularjs';
 
-const myApp = angular.module('myApp', ['ui-router']);
+const myApp = angular.module('myApp', [uirouter]);
 
 myApp.config($stateProvider => {
     const indexState = {
