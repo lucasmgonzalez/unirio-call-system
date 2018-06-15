@@ -39,4 +39,16 @@ gulp.task("js", () =>
     .pipe(gulp.dest(config.js.export))
 );
 
-gulp.task('default', ['css', 'js']);
+gulp.task('build', ['css', 'js']);
+
+gulp.task('watch', ['css', 'js'], () => {
+  livereload.listen();
+  gulp.watch([
+    config.sass.path + '**',
+  ], ['css']);
+  gulp.watch([
+    config.js.path + '**',
+  ], ['js']);
+});
+
+gulp.task('default', ['watch']);
