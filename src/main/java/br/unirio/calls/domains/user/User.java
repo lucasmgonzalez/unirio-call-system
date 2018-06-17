@@ -1,11 +1,17 @@
 package br.unirio.calls.domains.user;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.joda.time.DateTime;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public @Data class User {
+public @Data class User implements UserDetails{
 
     private int id;
     private String name;
@@ -18,4 +24,32 @@ public @Data class User {
     private boolean blocked;
     private DateTime lastLoginDate;
     private boolean isAdministrator;
+
+    public String getUsername() {
+        return this.email;
+    }
+
+    public Collection<GrantedAuthority> getAuthorities() {
+		return Collections.emptyList();
+	}
+
+	public boolean isAccountNonExpired() {
+        return true;
+    };
+
+	public boolean isAccountNonLocked() {
+        return !this.blocked;
+    };
+
+	public boolean isCredentialsNonExpired() {
+        return true;
+    };
+
+	public boolean isEnabled(){
+        return true;
+    };
+
+    public boolean isAdmin() {
+        return this.isAdministrator();
+    }
 }

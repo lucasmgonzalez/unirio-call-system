@@ -4,10 +4,10 @@
 
 DROP PROCEDURE IF EXISTS RegistraUsuario;
 DELIMITER //
-CREATE PROCEDURE RegistraUsuario(newNome VARCHAR(80), newEmail VARCHAR(80), OUT id INT)
+CREATE PROCEDURE RegistraUsuario(newNome VARCHAR(80), newEmail VARCHAR(80), newSenha VARCHAR(255), OUT id INT)
 BEGIN
-	INSERT INTO Usuario (dataRegistro, dataAtualizacao, nome, email)
-	VALUES (NOW(), NOW(), newNome, newEmail);
+	INSERT INTO Usuario (dataRegistro, dataAtualizacao, nome, email, senha)
+	VALUES (NOW(), NOW(), newNome, newEmail, newSenha);
 
 	SET id = LAST_INSERT_ID();
 END //
@@ -19,11 +19,9 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS AtribuirSenha;
 DELIMITER //
-CREATE PROCEDURE AtribuirSenha(senha VARCHAR(1024))
+CREATE PROCEDURE AtribuirSenha(thisId INT, newSenha VARCHAR(1024))
 BEGIN
-	INSERT INTO Usuario (senha)
-	VALUES (senha);
-
+	UPDATE Usuario SET senha = newSenha WHERE id = thisId;
 END //
 DELIMITER ;
 
@@ -62,7 +60,7 @@ DELIMITER ;
 -- REGISTRA UM LOGIN BEM SUCEDIDO DE UM USUARIO
 --
 
-DROP PROCEDURE IF EXISTS RegistrarLogin;
+DROP PROCEDURE IF EXISTS RegistraSucessoLogin;
 DELIMITER //
 CREATE PROCEDURE RegistraSucessoLogin(thisId INT)
 BEGIN
@@ -149,11 +147,11 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS AlterarDadosUsuario;
 DELIMITER //
-CREATE PROCEDURE AlterarDadosUsuario(thisId INT, thisNome VARCHAR(80))
+CREATE PROCEDURE AlterarDadosUsuario(thisId INT, thisNome VARCHAR(80), thisEmail VARCHAR(80))
 BEGIN
 	UPDATE Usuario
 	SET nome = thisNome,
-
+	email = thisEmail
 	WHERE id = thisId;
 END //
 DELIMITER ;
@@ -167,8 +165,7 @@ DELIMITER //
 CREATE PROCEDURE DesbloquearUsuario(thisId INT)
 BEGIN
 	UPDATE Usuario
-	SET bloqueado = esseNome,
-
+	SET bloqueado = esseNome
 	WHERE id = thisId;
 END //
 DELIMITER ;

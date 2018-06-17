@@ -3,7 +3,7 @@ import uirouter from '@uirouter/angularjs';
 
 import registerRoutes from './routes';
 
-import HelloWorld from './components/helloWorld';
+import HomePage from './components/helloWorld';
 
 const myApp = angular.module('myApp', [uirouter]);
 
@@ -12,5 +12,5 @@ myApp.config($stateProvider => {
     registerRoutes($stateProvider);
 });
 
-myApp.component('helloWorld', HelloWorld);
+myApp.component('homePage', HelloWorld);
 

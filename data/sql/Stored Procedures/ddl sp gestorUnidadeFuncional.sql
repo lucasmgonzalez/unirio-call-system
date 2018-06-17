@@ -6,7 +6,7 @@ DROP PROCEDURE IF EXISTS AssociarGestorUnidadeFuncional;
 DELIMITER //
 CREATE PROCEDURE AssociarGestorUnidadeFuncional(thisIdGestor INT, thisIdUnidade INT)
 BEGIN
-    INSERT INTO GestorUnidadaFuncional (idUnidade, idGestor)
+    INSERT INTO GestorUnidadeFuncional (idUnidade, idGestor)
     VALUES (thisIdUnidade, thisIdGestor);
 END //
 DELIMITER ;
@@ -19,7 +19,7 @@ DROP PROCEDURE IF EXISTS DesassociarGestorUnidadeFuncional;
 DELIMITER //
 CREATE PROCEDURE DesassociarGestorUnidadeFuncional(thisIdGestor INT, thisIdUnidade INT)
 BEGIN
-    DELETE FROM GestorUnidadaFuncional
+    DELETE FROM GestorUnidadeFuncional
     WHERE idUnidade = thisIdUnidade
     AND idGestor = thisIdGestor;
 END //

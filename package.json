@@ -20,6 +20,7 @@
     "@angular/router": "^0.2.0",
     "@uirouter/angularjs": "^1.0.18",
     "angular": "^1.6.10",
+    "axios": "^0.18.0",
     "gulp": "^3.9.1",
     "gulp-cli": "^2.0.1",
     "npm": "^6.1.0"

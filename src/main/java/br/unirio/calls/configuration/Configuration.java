@@ -1,8 +1,6 @@
 package br.unirio.calls.configuration;
 
-// import java.io.IOException;
-// import java.io.InputStream;
-// import java.util.Properties;
+import org.springframework.stereotype.Service;
 
 public class Configuration {
     // private static Properties configuration = null;
@@ -13,6 +11,7 @@ public class Configuration {
     public static final String DATABASE_NAME_KEY = "DATABASE_NAME";
     public static final String DATABASE_USER_KEY = "DATABASE_USER";
     public static final String DATABASE_PASSWORD_KEY = "DATABASE_PASSWORD";
+    public static final String JWT_SECRET_KEY = "JWT_SECRET";
 
     private static String valueOrDefault(String value, String defaultValue) {
         return value != null && !value.isEmpty() ? value : defaultValue;
@@ -40,5 +39,9 @@ public class Configuration {
 
     public static String getDatabasePassword() {
         return valueOrDefault(System.getenv(DATABASE_PASSWORD_KEY), "secret");
+    }
+
+    public static String getJWTSecret() {
+        return valueOrDefault(System.getenv(JWT_SECRET_KEY), "SecretAgentMan");
     }
 }

@@ -1,7 +1,7 @@
 const indexState = {
     name: 'index',
     url: '',
-    component: 'helloWorld'
+    component: 'homePage'
 };
 
 const registerRoutes = $stateProvider => {

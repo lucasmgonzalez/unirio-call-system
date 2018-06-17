@@ -7,7 +7,7 @@ DELIMITER //
 CREATE PROCEDURE CadastrarUnidadeFuncional(newNome VARCHAR(80), newSigla VARCHAR(10), OUT id INT)
 BEGIN
 	INSERT INTO UnidadeFuncional (dataRegistro, dataAtualizacao, nome, sigla)
-	VALUES (NOW(), NOW(), novoNome, newSigla);
+	VALUES (NOW(), NOW(), newNome, newSigla);
 
 	SET id = LAST_INSERT_ID();
 END //
@@ -23,8 +23,7 @@ CREATE PROCEDURE AlterarUnidadeFuncional(thisId INT, newNome VARCHAR(80), newSig
 BEGIN
 	UPDATE UnidadeFuncional
 	SET nome = newNome,
-	sigla = newSigla,
-
+	sigla = newSigla
 	WHERE id = thisId;
 END //
 DELIMITER ;
@@ -39,8 +38,7 @@ DELIMITER //
 CREATE PROCEDURE RemoverUnidadeFuncional(thisId INT)
 BEGIN
 	DELETE
-	FROM UnidadeFuncional
-
+	FROM UnidadeFuncional 
 	WHERE id = thisId;
 END //
 DELIMITER ;
