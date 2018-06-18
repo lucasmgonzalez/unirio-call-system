@@ -23,6 +23,8 @@
     "axios": "^0.18.0",
     "gulp": "^3.9.1",
     "gulp-cli": "^2.0.1",
+    "materialize": "^1.0.0",
+    "materialize-css": "^0.100.2",
     "npm": "^6.1.0"
   },
   "devDependencies": {

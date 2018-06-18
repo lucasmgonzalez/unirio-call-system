@@ -1,6 +1,9 @@
 package br.unirio.calls.domains.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,7 +20,10 @@ import java.io.IOException;
 import java.util.Collections;
 
 import br.unirio.calls.domains.authentication.AccountCredentials;
+import br.unirio.calls.domains.user.User;
+import br.unirio.calls.domains.user.UserRepository;
 
+@Configurable
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public JWTLoginFilter(String url, AuthenticationManager authManager) {
@@ -30,9 +36,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             throws AuthenticationException, IOException, ServletException {
 
         AccountCredentials creds = new ObjectMapper().readValue(req.getInputStream(), AccountCredentials.class);
-        res.addHeader("user", creds.getUsername());
-        res.addHeader("password", creds.getPassword());
-        res.addHeader("password_real", new BCryptPasswordEncoder(10).encode(creds.getPassword()));
 
         return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(),
                 creds.getPassword(), Collections.emptyList()));
@@ -43,4 +46,5 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             Authentication auth) throws IOException, ServletException {
         TokenAuthenticationService.addAuthentication(res, auth.getName());
     }
+
 }

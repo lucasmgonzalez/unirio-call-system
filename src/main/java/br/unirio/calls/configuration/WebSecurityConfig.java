@@ -96,6 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             try {
                 Authentication auth = super.authenticate(authentication);
                 // Register Login
+                
                 return auth;
             } catch (BadCredentialsException e) {
                 // Register Fail

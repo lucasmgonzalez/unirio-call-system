@@ -1,6 +1,7 @@
 package br.unirio.calls.domains.call;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.joda.time.DateTime;
 
@@ -17,7 +18,7 @@ public class CallFactory {
             call.setName(rs.getString("nome"));
             call.setInitials(rs.getString("sigla"));
             call.setOpensAt(new DateTime(rs.getTimestamp("dataAbertura")));
-            call.setClosesAt(new Datetime(rs.getTimestamp("dataEncerramento")));
+            call.setClosesAt(new DateTime(rs.getTimestamp("dataEncerramento")));
             call.setCanceled(rs.getBoolean("cancelada"));
             call.setFinished(rs.getBoolean("encerrada"));
 

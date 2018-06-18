@@ -1,5 +1,9 @@
 package br.unirio.calls.domains.call;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.springframework.stereotype.Repository;
 
 import br.unirio.calls.core.SqlRepository;
@@ -15,7 +19,7 @@ public class CallSqlRepository extends SqlRepository implements CallRepository {
 
             ResultSet rs = ps.executeQuery();
 
-            return rs.next() ? CollegeSectionFactory.buildFromResultSet(rs) : null;
+            return rs.next() ? CallFactory.buildFromResultSet(rs) : null;
         } catch (SQLException e) {
             return null;
         }

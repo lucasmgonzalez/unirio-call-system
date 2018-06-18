@@ -29,16 +29,23 @@ public class UserSqlRepository extends SqlRepository implements UserRepository {
     }
 
     public User findByEmailAddress(String email) {
-        if (this.connection == null)
+        if (this.connection == null){
+            System.out.println("WTF CONNECTION!!!??");
             return null;
+        }
 
         try {
             PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE email = ?");
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
-
-            return rs.next() ? UserFactory.buildFromResultSet(rs) : null;
+            
+            if (rs.next()) {
+                return UserFactory.buildFromResultSet(rs);
+            } else {
+                System.out.println("WTF BROH?!");
+                return null;
+            }
         } catch (SQLException e) {
             System.out.println("Not Found: " + e.getMessage());
             return null;
@@ -100,4 +107,5 @@ public class UserSqlRepository extends SqlRepository implements UserRepository {
             return false;
         }
     }
+
 }

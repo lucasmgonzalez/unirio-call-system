@@ -3,6 +3,7 @@ package br.unirio.calls.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,9 @@ public class UserController {
     @Autowired
     protected UserRepository repository;
 
+    @Autowired
+    protected PasswordEncoder encoder;
+
     @GetMapping("/api/user/{id}")
     public UserResource retrieve(@PathVariable String id) {
         return new UserResource(this.repository.findById(Integer.parseInt(id)));
@@ -30,6 +34,9 @@ public class UserController {
         if (input.getId() != 0) {
             input.setId(0);
         }
+
+        // Encoding Password
+        input.setPassword(encoder.encode(input.getPassword()));
         
         if (!this.repository.save(input)) {
             throw new Exception("Could not register model");
