@@ -3,6 +3,7 @@ package br.unirio.calls.domains.authentication;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -12,18 +13,16 @@ import br.unirio.calls.domains.user.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+@Configurable
 public class Guard {
-    @Autowired
     private UserRepository repository;
-
+    
     private User authUser;
-
-    public Guard() {
+    
+    @Autowired
+    public Guard(UserRepository repository) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User authUser = this.repository.findByEmailAddress(authentication.getName());
-        if (authUser != null) {
-            this.authUser = authUser;
-        }
+        this.authUser = this.repository.findByEmailAddress(authentication.getName());
     }
 
     public User getAuthenticatedUser() {

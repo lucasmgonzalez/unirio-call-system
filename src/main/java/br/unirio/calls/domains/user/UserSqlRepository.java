@@ -108,4 +108,133 @@ public class UserSqlRepository extends SqlRepository implements UserRepository {
         }
     }
 
+    // XGH
+    public boolean registerSuccessfulLogin(User user) {
+        if (this.connection == null)
+            return false;
+        
+        try
+        {
+            CallableStatement cs = this.connection.prepareCall("{call RegistraSucessoLogin(?)}");
+            cs.setInt(1, user.getId()); 
+            cs.execute();
+
+            return true;
+
+        } catch (SQLException e)
+        {
+            System.out.println("UserRepository.registerSuccesfulLogin: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean registerFailedLogin(User user) {
+        if (this.connection == null)
+            return false;
+        
+        try
+        {
+            CallableStatement cs = this.connection.prepareCall("{call RegistrarFalhaLogin(?)}");
+            cs.setInt(1, user.getId()); 
+            cs.execute();
+
+            return true;
+
+        } catch (SQLException e)
+        {
+            System.out.println("UserRepository.registerFailedLogin: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean changePassword(User user, String password) {
+        if (this.connection == null)
+            return false;
+        
+        try
+        {
+            CallableStatement cs = this.connection.prepareCall("{call TrocarSenha(?, ?)}");
+            cs.setInt(1, user.getId());
+            cs.setString(2, password);
+            cs.execute();
+
+            return true;
+
+        } catch (SQLException e)
+        {
+            System.out.println("UserRepository.changePassword: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean attachResetPasswordToken(User user, String token) {
+        if (this.connection == null)
+            return false;
+        
+        try
+        {
+            CallableStatement cs = this.connection.prepareCall("{call AssociarTokenEsqueciSenha(?, ?)}");
+            cs.setInt(1, user.getId());
+            cs.setString(2, token);
+            cs.execute();
+
+            return true;
+
+        } catch (SQLException e)
+        {
+            System.out.println("UserRepository.attachResetPasswordToken: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean detachResetPasswordToken(User user) {
+        if (this.connection == null)
+            return false;
+        
+        try
+        {
+            CallableStatement cs = this.connection.prepareCall("{call DesassociarTokenEsqueciSenha(?)}");
+            cs.setInt(1, user.getId());
+            cs.execute();
+
+            return true;
+
+        } catch (SQLException e)
+        {
+            System.out.println("UserRepository.detachResetPasswordToken: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean unblock(User user) {
+        if (this.connection == null)
+            return false;
+        
+        try
+        {
+            CallableStatement cs = this.connection.prepareCall("{call DesbloquearUsuario(?)}");
+            cs.setInt(1, user.getId());
+            cs.execute();
+
+            return true;
+
+        } catch (SQLException e)
+        {
+            System.out.println("UserRepository.unblock: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public User findByResetPasswordToken(String token) {
+        try {
+            PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE tokenSenha = ?");
+            ps.setString(1, token);
+
+            ResultSet rs = ps.executeQuery();
+
+            return rs.next() ? UserFactory.buildFromResultSet(rs) : null;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 }

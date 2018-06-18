@@ -93,13 +93,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+            User user = this.repository.findByEmailAddress(authentication.getName());
             try {
                 Authentication auth = super.authenticate(authentication);
                 // Register Login
-                
+                this.repository.registerSuccessfulLogin(user);
                 return auth;
             } catch (BadCredentialsException e) {
                 // Register Fail
+                this.repository.registerFailedLogin(user);
                 throw e;
             } catch (LockedException e) {
                 throw e;
