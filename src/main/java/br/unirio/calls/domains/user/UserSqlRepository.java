@@ -5,15 +5,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Collection;
 import java.util.concurrent.Callable;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.unirio.calls.core.SqlRepository;
+import br.unirio.calls.domains.college_section.CollegeSection;
+import br.unirio.calls.domains.college_section.CollegeSectionRepository;
 
 @Repository("UserRepository")
 public class UserSqlRepository extends SqlRepository implements UserRepository {
     public static final String TABLE_NAME = "Usuario";
+
+    @Autowired
+    protected CollegeSectionRepository collegeSectionRepository;
 
     public User findById(int id) {
         try {
@@ -22,7 +29,13 @@ public class UserSqlRepository extends SqlRepository implements UserRepository {
 
             ResultSet rs = ps.executeQuery();
 
-            return rs.next() ? UserFactory.buildFromResultSet(rs) : null;
+            User user = rs.next() ? UserFactory.buildFromResultSet(rs) : null;
+            
+            if (user != null) {
+                user.setCollegeSections(collegeSectionRepository.findByUserAssociated(user));
+            }
+
+            return user;
         } catch (SQLException e) {
             return null;
         }
@@ -30,7 +43,6 @@ public class UserSqlRepository extends SqlRepository implements UserRepository {
 
     public User findByEmailAddress(String email) {
         if (this.connection == null){
-            System.out.println("WTF CONNECTION!!!??");
             return null;
         }
 
@@ -40,12 +52,13 @@ public class UserSqlRepository extends SqlRepository implements UserRepository {
 
             ResultSet rs = ps.executeQuery();
             
-            if (rs.next()) {
-                return UserFactory.buildFromResultSet(rs);
-            } else {
-                System.out.println("WTF BROH?!");
-                return null;
+            User user = rs.next() ? UserFactory.buildFromResultSet(rs) : null;
+            
+            if (user != null) {
+                user.setCollegeSections(collegeSectionRepository.findByUserAssociated(user));
             }
+
+            return user;
         } catch (SQLException e) {
             System.out.println("Not Found: " + e.getMessage());
             return null;

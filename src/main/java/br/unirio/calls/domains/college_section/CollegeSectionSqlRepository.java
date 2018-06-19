@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +25,25 @@ public class CollegeSectionSqlRepository extends SqlRepository implements Colleg
             ResultSet rs = ps.executeQuery();
 
             return rs.next() ? CollegeSectionFactory.buildFromResultSet(rs) : null;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Collection<CollegeSection> findByUserAssociated(User user) {
+        try {
+            PreparedStatement ps = this.connection.prepareStatement("SELECT u.* FROM UnidadeFuncional u JOIN GestorUnidadeFuncional gu ON gu.idUnidade = u.id WHERE gu.idGestor = ?");
+            ps.setLong(1, user.getId());
+
+            ResultSet rs = ps.executeQuery();
+
+            Collection<CollegeSection> collection = new ArrayList();
+
+            while (rs.next()) {
+                collection.add(CollegeSectionFactory.buildFromResultSet(rs));
+            }
+
+            return collection;
         } catch (SQLException e) {
             return null;
         }

@@ -1,5 +1,9 @@
 package br.unirio.calls.requests;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
@@ -8,10 +12,26 @@ import br.unirio.calls.domains.call.Call;
 import lombok.Data;
 
 public @Data class UpdateCallRequest {
+    
+    @NotNull(message = "Não pode ser vazio")
+    @NotEmpty(message = "Não pode ser vazio")
+    @Digits(message = "Precisa ser um número", fraction = 0, integer = 6)
     private int collegeSectionId;
+    
+    @NotNull(message = "Não pode ser vazio")
+    @NotEmpty(message = "Não pode ser vazio")
     private String name;
+    
+    @NotNull(message = "Não pode ser vazio")
+    @NotEmpty(message = "Não pode ser vazio")
     private String initials;
+    
+    @NotNull(message = "Não pode ser vazio")
+    @NotEmpty(message = "Não pode ser vazio")
     private String opensAt;
+    
+    @NotNull(message = "Não pode ser vazio")
+    @NotEmpty(message = "Não pode ser vazio")
     private String closesAt;
 
     public Call buildCall() {

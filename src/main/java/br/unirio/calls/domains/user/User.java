@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import br.unirio.calls.domains.college_section.CollegeSection;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,8 @@ public @Data class User implements UserDetails{
     private boolean blocked;
     private DateTime lastLoginDate;
     private boolean isAdministrator;
+
+    private Collection<CollegeSection> collegeSections;
 
     public String getUsername() {
         return this.email;

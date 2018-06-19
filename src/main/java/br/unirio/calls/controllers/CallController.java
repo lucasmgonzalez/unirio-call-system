@@ -3,6 +3,8 @@ package br.unirio.calls.controllers;
 import java.awt.List;
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +40,7 @@ public class CallController {
     }
 
     @PostMapping("/api/call")
-    public CallResource register(@RequestBody RegisterCallRequest requestBody) throws Exception {
+    public CallResource register(@Valid @RequestBody RegisterCallRequest requestBody) throws Exception {
         Call call = requestBody.buildCall();
 
         if (!this.repository.save(call)) {
@@ -49,7 +51,7 @@ public class CallController {
     }
 
     @PutMapping("/api/call/{id}")
-    public CallResource update(@PathVariable String id, @RequestBody UpdateCallRequest requestBody) throws Exception {
+    public CallResource update(@PathVariable String id, @Valid @RequestBody UpdateCallRequest requestBody) throws Exception {
         Call call = requestBody.buildCall();
         
         call.setId(Integer.parseInt(id));
@@ -67,7 +69,7 @@ public class CallController {
     } */
 
     @PostMapping("/api/call/{callId}/field")
-    public CallFieldResource registerField(@PathVariable String callId, @RequestBody RegisterCallFieldRequest requestBody) throws Exception{
+    public CallFieldResource registerField(@PathVariable String callId,@Valid @RequestBody RegisterCallFieldRequest requestBody) throws Exception{
         CallField field = requestBody.buildCallField();
 
         field.setCallId(Integer.parseInt(callId));
@@ -80,7 +82,7 @@ public class CallController {
     }
 
     @PutMapping("/api/call/{callId}/field/{id}")
-    public CallFieldResource updateField(@PathVariable String id, @RequestBody UpdateCallFieldRequest requestBody) throws Exception{
+    public CallFieldResource updateField(@PathVariable String id, @Valid @RequestBody UpdateCallFieldRequest requestBody) throws Exception{
         CallField field = requestBody.buildCallField();
         
         field.setId(Integer.parseInt(id));

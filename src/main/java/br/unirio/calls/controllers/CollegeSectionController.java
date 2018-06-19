@@ -1,5 +1,7 @@
 package br.unirio.calls.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +32,7 @@ public class CollegeSectionController {
     }
 
     @PostMapping("/api/college-section")
-    public CollegeSectionResource register(@RequestBody CollegeSection input) throws Exception{
+    public CollegeSectionResource register(@Valid @RequestBody CollegeSection input) throws Exception{
         if (input.getId() != 0) {
             input.setId(0);
         }
@@ -50,7 +52,7 @@ public class CollegeSectionController {
     }
 
     @PutMapping("/api/college-section/{id}")
-    public CollegeSectionResource update(@PathVariable String id, @RequestBody CollegeSection input) throws Exception {
+    public CollegeSectionResource update(@PathVariable String id,@Valid @RequestBody CollegeSection input) throws Exception {
         input.setId(Integer.parseInt(id));
 
         // Check if user can update this section 

@@ -2,6 +2,8 @@ package br.unirio.calls.controllers;
 
 import java.util.Random;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.unirio.calls.core.helper.RandomString;
 import br.unirio.calls.domains.user.User;
 import br.unirio.calls.domains.user.UserRepository;
+import br.unirio.calls.requests.RegisterUserRequest;
 import br.unirio.calls.requests.ResetPasswordRequest;
 import br.unirio.calls.requests.ResetPasswordTokenRequest;
+import br.unirio.calls.requests.UpdateUserRequest;
 import br.unirio.calls.resources.UserResource;
 
 @RestController
@@ -35,18 +39,13 @@ public class UserController {
     }
 
     @PostMapping("/api/user")
-    public UserResource register(@RequestBody User input) throws Exception{
-        if (input.getId() != 0) {
-            input.setId(0);
-        }
+    public UserResource register(@Valid @RequestBody RegisterUserRequest requestBody) throws Exception{
+        User user = requestBody.buildUser();
 
-        // Encoding Password
-        input.setPassword(encoder.encode(input.getPassword()));
-        
-        if (!this.repository.save(input)) {
+        if (!this.repository.save(user)) {
             throw new Exception("Could not register model");
         }
-        return new UserResource(input);
+        return new UserResource(user);
     }
 
     @GetMapping("/api/me")
@@ -61,20 +60,22 @@ public class UserController {
     }
 
     @PutMapping("/api/user/{id}")
-    public UserResource update(@PathVariable String id, @RequestBody User input) throws Exception {
-        input.setId(Integer.parseInt(id));
+    public UserResource update(@PathVariable String id,@Valid @RequestBody UpdateUserRequest requestBody) throws Exception {
+        User user = requestBody.buildUser();
+        
+        user.setId(Integer.parseInt(id));
 
         // Check if user can update this profile (same user)
 
-        if(!this.repository.save(input)) {
+        if(!this.repository.save(user)) {
             throw new Exception("Could not update model");
         }
         
-        return new UserResource(input);
+        return new UserResource(user);
     }
 
     @PostMapping("/api/user/reset-password-token")
-    public void resetPasswordToken(@RequestBody ResetPasswordTokenRequest requestBody) {
+    public void resetPasswordToken(@Valid @RequestBody ResetPasswordTokenRequest requestBody) {
         User user = this.repository.findByEmailAddress(requestBody.getEmail());
         
         String token = RandomString.generate(100);
@@ -86,7 +87,7 @@ public class UserController {
     }
 
     @PostMapping("/api/user/reset-password/{token}")
-    public void resetPassword(@PathVariable String token, @RequestBody ResetPasswordRequest requestBody) {
+    public void resetPassword(@PathVariable String token, @Valid @RequestBody ResetPasswordRequest requestBody) {
         User user = this.repository.findByResetPasswordToken(token);
 
         String password = this.encoder.encode(requestBody.getPassword());
