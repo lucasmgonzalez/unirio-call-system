@@ -3,6 +3,9 @@ package br.unirio.calls.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +50,11 @@ public class CollegeSectionController {
         if (!this.repository.save(input)) {
             throw new Exception("Could not register model");
         }
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = this.userRepository.findByEmailAddress(auth.getName());
+
+        this.repository.associateUser(input, user);
 
         return new CollegeSectionResource(input);
     }

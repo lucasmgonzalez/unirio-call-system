@@ -50,6 +50,8 @@ public class UserSqlRepository extends SqlRepository implements UserRepository {
             PreparedStatement ps = this.connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE email = ?");
             ps.setString(1, email);
 
+            System.out.println(ps.toString());
+
             ResultSet rs = ps.executeQuery();
             
             User user = rs.next() ? UserFactory.buildFromResultSet(rs) : null;

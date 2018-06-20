@@ -259,7 +259,7 @@ $RECYCLE.BIN/
 node_modules/
 
 # Built assets
-src/main/webapp/scripts/
-src/main/webapp/styles/
+#src/main/webapp/scripts/
+#src/main/webapp/styles/
 
 # End of https://www.gitignore.io/api/git,java,maven,macos,linux,eclipse,windows,netbeans,java-web,intellij,codeblocks

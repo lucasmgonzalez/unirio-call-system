@@ -14,7 +14,6 @@ import lombok.Data;
 public @Data class RegisterCallRequest {
     
     @NotNull(message = "Não pode ser vazio")
-    @NotEmpty(message = "Não pode ser vazio")
     @Digits(message = "Precisa ser um número", fraction = 0, integer = 6)
     private int collegeSectionId;
 

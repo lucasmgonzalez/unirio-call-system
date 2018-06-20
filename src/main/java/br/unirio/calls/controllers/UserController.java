@@ -1,5 +1,7 @@
 package br.unirio.calls.controllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 import javax.validation.Valid;
@@ -16,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.unirio.calls.core.helper.RandomString;
+import br.unirio.calls.domains.college_section.CollegeSection;
+import br.unirio.calls.domains.college_section.CollegeSectionRepository;
 import br.unirio.calls.domains.user.User;
 import br.unirio.calls.domains.user.UserRepository;
 import br.unirio.calls.requests.RegisterUserRequest;
 import br.unirio.calls.requests.ResetPasswordRequest;
 import br.unirio.calls.requests.ResetPasswordTokenRequest;
 import br.unirio.calls.requests.UpdateUserRequest;
+import br.unirio.calls.resources.CollegeSectionResource;
 import br.unirio.calls.resources.UserResource;
 
 @RestController
@@ -29,6 +34,9 @@ public class UserController {
 
     @Autowired
     protected UserRepository repository;
+
+    @Autowired
+    protected CollegeSectionRepository collegeSectionRepository;
 
     @Autowired
     protected PasswordEncoder encoder;
@@ -95,5 +103,18 @@ public class UserController {
         this.repository.changePassword(user, password);
         this.repository.unblock(user);
         this.repository.detachResetPasswordToken(user);
+    }
+
+    @GetMapping("/api/user/{id}/college-sections")
+    public Collection<CollegeSectionResource> userCollegeSection(@PathVariable String id) {
+        User user = this.repository.findById(Integer.parseInt(id));
+
+        Collection<CollegeSectionResource> sections = new ArrayList<CollegeSectionResource>();
+
+        for(CollegeSection section : this.collegeSectionRepository.findByUserAssociated(user)) {
+            sections.add(new CollegeSectionResource(section));
+        }
+
+        return sections;
     }
 }
