@@ -146,3 +146,5 @@ CREATE TABLE ResultadoChamada
     CONSTRAINT pkResultadoChamada PRIMARY KEY(id),
     CONSTRAINT fkResultadoChamadaChamada FOREIGN KEY(idChamada) REFERENCES Chamada(id)
 );
+
+INSERT INTO Usuario (dataRegistro, dataAtualizacao, nome, email, senha, administrador) VALUES (NOW(), NOW(), "Admin", "admin@email.com", "$2b$10$fmxpAB26svBfuSSwtjYQmuZSijSf.Af9uWDG5ZsXoA/.NgI/Si2O.", 1)
